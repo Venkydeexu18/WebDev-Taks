@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            color: #fff;
+            overflow: hidden;
+            
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: row;
+        }
+
+        .heading {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            color: #ecf0f1;
+        }
+
+        .heading::before,
+        .heading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 2px;
+            background-color: #ecf0f1;
+        }
+
+        .heading::before {
+            left: 10px;
+            transform: translate(-50%, -50%);
+        }
+
+        .heading::after {
+            right: 10px;
+            transform: translate(50%, -50%);
+        }
+
+        .product {
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.4) 100%);
+            box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #fff;
+            color: #3498db;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            color: #fff;
+        }
+
+        #go-to-cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        #go-to-cart i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">Available Products!</div>
+        <div class="product">
+            <h2>Rolex Watch</h2>
+            <img src="watch.jpg" alt="Product 1 Image" width="300">
+            <p>Embrace timeless elegance with our Rolex watch, a symbol of precision and luxury.</p>
+            <p>Price: ₹2,99,999</p>
+            <button onclick="addToCart('Rolex Watch', 299999)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h2>Spectacles</h2>
+            <img src="specs.jpeg" alt="Product 2 Image" width="300">
+            <p>Elevate your style with our chic spectacles, blending fashion and clear vision seamlessly.</p>
+            <p>Price: ₹29,999</p>
+            <button onclick="addToCart('Spectacles', 29999)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h2>A|X Wallet</h2>
+            <img src="wallet.jpg" alt="Product 3 Image" width="300">
+            <p>Experience sophistication in every detail with our meticulously crafted leather wallet.</p>
+            <p>Price: ₹1,89,999</p>
+            <button onclick="addToCart('A|X Wallet', 189999)">Add to Cart</button>
+        </div>
+        <div id="popup" class="popup">
+            Product added to cart successfully!
+        </div>
+        <button id="go-to-cart" onclick="goToCart()">
+            <i class="fas fa-shopping-cart"></i> Go to Cart
+        </button>
+    </div>
+    
+    <script>
+        function addToCart(name, price) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const item = { name, price };
+            cart.push(item);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            const popup = document.getElementById("popup");
+            popup.style.display = "block";
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 1000);
+        }
+        function goToCart() {
+            window.location.href = "cart.html";
+        }
+    </script>
+    
+    </body>
+    </html>

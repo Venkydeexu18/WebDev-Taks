@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            height: 100vh;
+            flex-direction: row;
+        }
+
+        .order {
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.4) 100%);
+            box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .order-item {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .order-item img {
+            width: 80px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .timestamp {
+            font-size: 0.8em;
+            color: #ecf0f1;
+            margin-top: 10px;
+        }
+        h1 {
+            padding-top: 180px;
+            color: #ecf0f1;
+            text-align: center;
+            top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Orders!</h1>
+    <div class="container" id="orders">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", displayOrders);
+        function displayOrders() {
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+        const ordersContainer = document.getElementById("orders");
+        ordersContainer.innerHTML = "";
+        orders.forEach(order => {
+            const orderDiv = document.createElement("div");
+            orderDiv.classList.add("order");
+            order.items.forEach(item => {
+                const { name, price } = item;
+                const imageSrc = getImagePathForOrders(name);
+                const orderItem = document.createElement("div");
+                orderItem.classList.add("order-item");
+                const itemImage = document.createElement("img");
+                itemImage.src = imageSrc;
+                itemImage.alt = `${name} Image`;
+                const itemDetails = document.createElement("div");
+                itemDetails.innerHTML = `<strong>${name}</strong><br>Price: ₹${price}`;
+                orderItem.appendChild(itemImage);
+                orderItem.appendChild(itemDetails);
+                orderDiv.appendChild(orderItem);
+            });
+            const timestampDiv = document.createElement("div");
+            timestampDiv.classList.add("timestamp");
+            timestampDiv.textContent = `Order placed on: ${new Date(order.timestamp).toLocaleString()}`;
+            orderDiv.appendChild(timestampDiv);
+            ordersContainer.appendChild(orderDiv);
+        });
+    }
+    function getImagePathForOrders(productName) {
+        switch (productName) {
+            case "Rolex Watch":
+                return "watch.jpg";
+            case "Spectacles":
+                return "specs.jpeg";
+            case "A|X Wallet":
+                return "wallet.jpg";
+            default:
+                return "";
+        }
+    }
+    </script>
+
+</body>
+</html>
